@@ -62,7 +62,7 @@ function AgentTab() {
     setGenerating(false);
   };
 
-  const tzLabel = TIMEZONES.find((t) => t.value === agent.timezone)?.label ?? agent.timezone;
+  const tzLabel = TIMEZONES.find((t) => t.value === agent.timezone)?.label ?? agent.timezone ?? "UTC";
   const voices = VOICES.filter((v) => `${v.name} ${v.description}`.toLowerCase().includes(voiceQ.toLowerCase()));
 
   return (
