@@ -17,9 +17,11 @@ export type Database = {
       agents: {
         Row: {
           agent_type: string
+          allowed_domain: string | null
           business_name: string | null
           call_count: number
           chat_count: number
+          chatbot: Json
           collect_fields: Json
           created_at: string
           first_message: string | null
@@ -39,9 +41,11 @@ export type Database = {
         }
         Insert: {
           agent_type?: string
+          allowed_domain?: string | null
           business_name?: string | null
           call_count?: number
           chat_count?: number
+          chatbot?: Json
           collect_fields?: Json
           created_at?: string
           first_message?: string | null
@@ -61,9 +65,11 @@ export type Database = {
         }
         Update: {
           agent_type?: string
+          allowed_domain?: string | null
           business_name?: string | null
           call_count?: number
           chat_count?: number
+          chatbot?: Json
           collect_fields?: Json
           created_at?: string
           first_message?: string | null
@@ -190,6 +196,7 @@ export type Database = {
           id: string
           messages: Json
           summary: string | null
+          updated_at: string
         }
         Insert: {
           agent_id?: string | null
@@ -199,6 +206,7 @@ export type Database = {
           id?: string
           messages?: Json
           summary?: string | null
+          updated_at?: string
         }
         Update: {
           agent_id?: string | null
@@ -208,6 +216,7 @@ export type Database = {
           id?: string
           messages?: Json
           summary?: string | null
+          updated_at?: string
         }
         Relationships: [
           {
@@ -226,32 +235,80 @@ export type Database = {
           },
         ]
       }
+      knowledge_chunks: {
+        Row: {
+          agent_id: string
+          content: string
+          created_at: string
+          embedding: string
+          id: string
+          item_id: string
+        }
+        Insert: {
+          agent_id: string
+          content: string
+          created_at?: string
+          embedding: string
+          id?: string
+          item_id: string
+        }
+        Update: {
+          agent_id?: string
+          content?: string
+          created_at?: string
+          embedding?: string
+          id?: string
+          item_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "knowledge_chunks_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "knowledge_chunks_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "knowledge_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       knowledge_items: {
         Row: {
           agent_id: string | null
           content: string | null
           created_at: string
+          error: string | null
           id: string
           source_type: string
           source_url: string | null
+          status: string
           title: string | null
         }
         Insert: {
           agent_id?: string | null
           content?: string | null
           created_at?: string
+          error?: string | null
           id?: string
           source_type?: string
           source_url?: string | null
+          status?: string
           title?: string | null
         }
         Update: {
           agent_id?: string | null
           content?: string | null
           created_at?: string
+          error?: string | null
           id?: string
           source_type?: string
           source_url?: string | null
+          status?: string
           title?: string | null
         }
         Relationships: [
@@ -311,7 +368,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      match_knowledge_chunks: {
+        Args: { _agent_id: string; _count?: number; _embedding: string }
+        Returns: {
+          content: string
+          similarity: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
