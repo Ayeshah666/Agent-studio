@@ -39,12 +39,12 @@ function Home() {
 
   const pickIndustry = (i: string) => {
     setIndustry(i);
-    setGoal(idea.trim() || INDUSTRY_GOALS[i]);
+    setGoal(idea.trim() || INDUSTRY_GOALS[i] || "");
   };
   const reset = () => { setType(null); setIndustry(null); };
 
   const create = async () => {
-    if (!type || !industry || !name.trim()) return;
+    if (!type || !industry || !name.trim()) return undefined;
     setSaving(true);
     const { data, error } = await supabase
       .from("agents")
@@ -62,8 +62,9 @@ function Home() {
       .select("id")
       .single();
     setSaving(false);
-    if (error) return toast.error("Could not create agent", { description: error.message });
+    if (error) return void toast.error("Could not create agent", { description: error.message });
     navigate({ to: "/agent/$id", params: { id: data.id } });
+    return undefined;
   };
 
   return (

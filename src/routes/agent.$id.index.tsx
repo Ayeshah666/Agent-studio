@@ -95,7 +95,7 @@ function AgentTab() {
           </div>
           <div className="space-y-2">
             <Label>LLM Model</Label>
-            <Select value={agent.llm_model ?? LLM_MODELS[0].value} onValueChange={(v) => patch({ llm_model: v })}>
+            <Select value={agent.llm_model ?? "google/gemini-3-flash-preview"} onValueChange={(v) => patch({ llm_model: v })}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>{LLM_MODELS.map((l) => <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>)}</SelectContent>
             </Select>
