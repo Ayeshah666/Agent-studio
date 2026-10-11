@@ -15,7 +15,7 @@ export const generateSystemPrompt = createServerFn({ method: "POST" })
     }).parse(d),
   )
   .handler(async ({ data }) => {
-    const key = process.env.LOVABLE_API_KEY;
+    const key = process.env["LOVABLE_API_KEY"];
     if (!key) throw new Error("AI is not configured");
     const brief = [
       `Assistant name: ${data.name}`,
