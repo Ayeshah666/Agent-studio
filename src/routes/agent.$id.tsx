@@ -67,6 +67,7 @@ function Workspace() {
                 onChange={(e) => setName(e.target.value)}
                 onBlur={() => name.trim() && name !== agent.name && save({ name: name.trim() })}
                 onKeyDown={(e) => e.key === "Enter" && (e.target as HTMLInputElement).blur()}
+                size={Math.max(name.length, 4)}
                 className="min-w-0 rounded-md bg-transparent px-1 text-xl font-semibold tracking-tight outline-none hover:bg-accent focus:bg-accent"
                 aria-label="Agent name"
               />

@@ -89,14 +89,14 @@ function AgentTab() {
           <div className="space-y-2">
             <Label>Language</Label>
             <Select value={agent.language ?? "en-US"} onValueChange={(v) => patch({ language: v })}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectTrigger><SelectValue>{LANGUAGES.find((l) => l.value === (agent.language ?? "en-US"))?.label}</SelectValue></SelectTrigger>
               <SelectContent>{LANGUAGES.map((l) => <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>)}</SelectContent>
             </Select>
           </div>
           <div className="space-y-2">
             <Label>LLM Model</Label>
             <Select value={agent.llm_model ?? "google/gemini-3-flash-preview"} onValueChange={(v) => patch({ llm_model: v })}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectTrigger><SelectValue>{LLM_MODELS.find((l) => l.value === agent.llm_model)?.label ?? agent.llm_model}</SelectValue></SelectTrigger>
               <SelectContent>{LLM_MODELS.map((l) => <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>)}</SelectContent>
             </Select>
           </div>
