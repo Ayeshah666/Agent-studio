@@ -16,6 +16,9 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as AgentIdRouteImport } from './routes/agent.$id'
 import { Route as AgentIdIndexRouteImport } from './routes/agent.$id.index'
 import { Route as AgentIdTabRouteImport } from './routes/agent.$id.$tab'
+import { Route as ApiPublicWidgetAgentIdChatRouteImport } from './routes/api/public/widget/$agentId.chat'
+import { Route as ApiPublicWidgetAgentIdConfigRouteImport } from './routes/api/public/widget/$agentId.config'
+import { Route as ApiPublicWidgetAgentIdLeadRouteImport } from './routes/api/public/widget/$agentId.lead'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +55,24 @@ const AgentIdTabRoute = AgentIdTabRouteImport.update({
   path: '/$tab',
   getParentRoute: () => AgentIdRoute,
 } as any)
+const ApiPublicWidgetAgentIdChatRoute =
+  ApiPublicWidgetAgentIdChatRouteImport.update({
+    id: '/api/public/widget/$agentId/chat',
+    path: '/api/public/widget/$agentId/chat',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicWidgetAgentIdConfigRoute =
+  ApiPublicWidgetAgentIdConfigRouteImport.update({
+    id: '/api/public/widget/$agentId/config',
+    path: '/api/public/widget/$agentId/config',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicWidgetAgentIdLeadRoute =
+  ApiPublicWidgetAgentIdLeadRouteImport.update({
+    id: '/api/public/widget/$agentId/lead',
+    path: '/api/public/widget/$agentId/lead',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +82,9 @@ export interface FileRoutesByFullPath {
   '/agent/$id': typeof AgentIdRouteWithChildren
   '/agent/$id/$tab': typeof AgentIdTabRoute
   '/agent/$id/': typeof AgentIdIndexRoute
+  '/api/public/widget/$agentId/chat': typeof ApiPublicWidgetAgentIdChatRoute
+  '/api/public/widget/$agentId/config': typeof ApiPublicWidgetAgentIdConfigRoute
+  '/api/public/widget/$agentId/lead': typeof ApiPublicWidgetAgentIdLeadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -69,6 +93,9 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/agent/$id/$tab': typeof AgentIdTabRoute
   '/agent/$id': typeof AgentIdIndexRoute
+  '/api/public/widget/$agentId/chat': typeof ApiPublicWidgetAgentIdChatRoute
+  '/api/public/widget/$agentId/config': typeof ApiPublicWidgetAgentIdConfigRoute
+  '/api/public/widget/$agentId/lead': typeof ApiPublicWidgetAgentIdLeadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -79,6 +106,9 @@ export interface FileRoutesById {
   '/agent/$id': typeof AgentIdRouteWithChildren
   '/agent/$id/$tab': typeof AgentIdTabRoute
   '/agent/$id/': typeof AgentIdIndexRoute
+  '/api/public/widget/$agentId/chat': typeof ApiPublicWidgetAgentIdChatRoute
+  '/api/public/widget/$agentId/config': typeof ApiPublicWidgetAgentIdConfigRoute
+  '/api/public/widget/$agentId/lead': typeof ApiPublicWidgetAgentIdLeadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -90,6 +120,9 @@ export interface FileRouteTypes {
     | '/agent/$id'
     | '/agent/$id/$tab'
     | '/agent/$id/'
+    | '/api/public/widget/$agentId/chat'
+    | '/api/public/widget/$agentId/config'
+    | '/api/public/widget/$agentId/lead'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -98,6 +131,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/agent/$id/$tab'
     | '/agent/$id'
+    | '/api/public/widget/$agentId/chat'
+    | '/api/public/widget/$agentId/config'
+    | '/api/public/widget/$agentId/lead'
   id:
     | '__root__'
     | '/'
@@ -107,6 +143,9 @@ export interface FileRouteTypes {
     | '/agent/$id'
     | '/agent/$id/$tab'
     | '/agent/$id/'
+    | '/api/public/widget/$agentId/chat'
+    | '/api/public/widget/$agentId/config'
+    | '/api/public/widget/$agentId/lead'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -115,6 +154,9 @@ export interface RootRouteChildren {
   PhoneNumbersRoute: typeof PhoneNumbersRoute
   SettingsRoute: typeof SettingsRoute
   AgentIdRoute: typeof AgentIdRouteWithChildren
+  ApiPublicWidgetAgentIdChatRoute: typeof ApiPublicWidgetAgentIdChatRoute
+  ApiPublicWidgetAgentIdConfigRoute: typeof ApiPublicWidgetAgentIdConfigRoute
+  ApiPublicWidgetAgentIdLeadRoute: typeof ApiPublicWidgetAgentIdLeadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -168,6 +210,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AgentIdTabRouteImport
       parentRoute: typeof AgentIdRoute
     }
+    '/api/public/widget/$agentId/chat': {
+      id: '/api/public/widget/$agentId/chat'
+      path: '/api/public/widget/$agentId/chat'
+      fullPath: '/api/public/widget/$agentId/chat'
+      preLoaderRoute: typeof ApiPublicWidgetAgentIdChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/widget/$agentId/config': {
+      id: '/api/public/widget/$agentId/config'
+      path: '/api/public/widget/$agentId/config'
+      fullPath: '/api/public/widget/$agentId/config'
+      preLoaderRoute: typeof ApiPublicWidgetAgentIdConfigRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/widget/$agentId/lead': {
+      id: '/api/public/widget/$agentId/lead'
+      path: '/api/public/widget/$agentId/lead'
+      fullPath: '/api/public/widget/$agentId/lead'
+      preLoaderRoute: typeof ApiPublicWidgetAgentIdLeadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -190,6 +253,9 @@ const rootRouteChildren: RootRouteChildren = {
   PhoneNumbersRoute: PhoneNumbersRoute,
   SettingsRoute: SettingsRoute,
   AgentIdRoute: AgentIdRouteWithChildren,
+  ApiPublicWidgetAgentIdChatRoute: ApiPublicWidgetAgentIdChatRoute,
+  ApiPublicWidgetAgentIdConfigRoute: ApiPublicWidgetAgentIdConfigRoute,
+  ApiPublicWidgetAgentIdLeadRoute: ApiPublicWidgetAgentIdLeadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
