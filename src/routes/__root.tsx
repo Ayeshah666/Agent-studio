@@ -5,6 +5,7 @@ import {
   createRootRouteWithContext,
   useRouter,
   HeadContent,
+  useRouterState,
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
@@ -123,6 +124,8 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const bare = useRouterState({ select: (s) => s.location.pathname.startsWith("/widget-preview") });
+  if (bare) return <QueryClientProvider client={queryClient}><Outlet /></QueryClientProvider>;
 
   return (
     <QueryClientProvider client={queryClient}>
