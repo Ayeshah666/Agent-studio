@@ -71,7 +71,7 @@ function Builder() {
   };
 
   const doFill = async () => {
-    if (!c.website) return toast.error("Add the business website first");
+    if (!c.website) { toast.error("Add the business website first"); return; }
     setFilling(true);
     try { const r = await autofill({ data: { website: c.website, business_name: c.business_name } }); set(r); toast.success("Filled from your website — check Bot Goals"); }
     catch (e) { toast.error((e as Error).message); }
