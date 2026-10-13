@@ -49,7 +49,7 @@ function Builder() {
 
   const site = c.website ? (c.website.startsWith("http") ? c.website : `https://${c.website}`) : "";
   useEffect(() => {
-    if (!site) { setEmbed(false); return; }
+    if (!site) { setEmbed(false); return undefined; }
     const t = setTimeout(() => check({ data: { url: site } }).then((r) => setEmbed(r.embeddable)).catch(() => setEmbed(false)), 600);
     return () => clearTimeout(t);
   }, [site]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -105,7 +105,7 @@ function Builder() {
             <F label="Bot name"><Input value={c.bot_name} onChange={(e) => set({ bot_name: e.target.value })} /></F>
             <F label="Business name"><Input value={c.business_name} onChange={(e) => set({ business_name: e.target.value })} /></F>
             <F label="Business website"><Input value={c.website} onChange={(e) => set({ website: e.target.value })} placeholder="https://example.com" /></F>
-            <F label={`Wait time before responding: ${c.wait_seconds}s`}><Slider min={0} max={5} step={0.5} value={[c.wait_seconds]} onValueChange={([v]) => set({ wait_seconds: v })} /></F>
+            <F label={`Wait time before responding: ${c.wait_seconds}s`}><Slider min={0} max={5} step={0.5} value={[c.wait_seconds]} onValueChange={([v]) => set({ wait_seconds: v ?? 0 })} /></F>
             <F label="Response style"><Seg value={c.response_style} onChange={(v) => set({ response_style: v })} options={[{ value: "concise", label: "Concise" }, { value: "balanced", label: "Balanced" }, { value: "detailed", label: "Detailed" }]} /></F>
             <Button variant="outline" className="w-full" onClick={doFill} disabled={filling}>{filling ? <Loader2 className="h-4 w-4 animate-spin" /> : <Wand2 className="h-4 w-4" />} Auto-Fill with AI</Button>
           </TabsContent>
@@ -157,7 +157,7 @@ function Builder() {
             </F>
             <div className="grid grid-cols-3 gap-3">
               {(["accent", "background", "bubble"] as const).map((k) => (
-                <F key={k} label={k === "bubble" ? "Bot bubble" : k[0].toUpperCase() + k.slice(1)}>
+                <F key={k} label={k === "bubble" ? "Bot bubble" : k.charAt(0).toUpperCase() + k.slice(1)}>
                   <input type="color" value={c.colors[k]} onChange={(e) => set({ theme: "custom", colors: { ...c.colors, [k]: e.target.value } })} className="h-9 w-full cursor-pointer rounded-md border bg-transparent" />
                 </F>
               ))}

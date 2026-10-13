@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 // Bare page loaded inside the Chatbot Builder's preview frame.
 export const Route = createFileRoute("/widget-preview/$id")({
-  validateSearch: (s: Record<string, unknown>) => ({ site: typeof s.site === "string" ? s.site : "", embed: s.embed === true || s.embed === "1" || s.embed === "true" }),
+  validateSearch: (s: Record<string, unknown>) => ({ site: typeof s["site"] === "string" ? s["site"] : "", embed: s["embed"] === true || s["embed"] === 1 || s["embed"] === "1" }),
   head: () => ({ meta: [{ title: "Chatbot preview — AgentStudio" }, { name: "description", content: "Live chatbot widget preview." }, { property: "og:title", content: "Chatbot preview — AgentStudio" }, { property: "og:description", content: "Live chatbot widget preview." }, { name: "robots", content: "noindex" }] }),
   component: Preview,
 });

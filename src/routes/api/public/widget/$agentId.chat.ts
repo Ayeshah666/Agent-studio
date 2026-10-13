@@ -26,7 +26,7 @@ export const Route = createFileRoute("/api/public/widget/$agentId/chat")({
         const parsed = schema.safeParse(await request.json().catch(() => null));
         if (!parsed.success) return json({ error: "Invalid message" }, 400);
         const { messages, contactId } = parsed.data;
-        const last = messages[messages.length - 1];
+        const last = messages[messages.length - 1]!;
         if (last.role !== "user") return json({ error: "Invalid message" }, 400);
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
