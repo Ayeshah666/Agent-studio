@@ -58,7 +58,7 @@ export const DEFAULT_CHATBOT: ChatbotConfig = {
   quick_replies: [],
   lead_form: { enabled: false, fields: { name: true, email: true, phone: false } },
   theme: "classic",
-  colors: THEMES[0].colors,
+  colors: { accent: "#2563eb", background: "#ffffff", bubble: "#f1f5f9", text: "#0f172a" },
   size: "normal",
   icon: "chat",
   avatar: "female",

@@ -17,6 +17,9 @@ import { Route as AgentIdRouteImport } from './routes/agent.$id'
 import { Route as WidgetPreviewIdRouteImport } from './routes/widget-preview.$id'
 import { Route as AgentIdIndexRouteImport } from './routes/agent.$id.index'
 import { Route as AgentIdTabRouteImport } from './routes/agent.$id.$tab'
+import { Route as AgentIdChatbotBuilderRouteImport } from './routes/agent.$id.chatbot-builder'
+import { Route as AgentIdConnectRouteImport } from './routes/agent.$id.connect'
+import { Route as AgentIdKnowledgeBaseRouteImport } from './routes/agent.$id.knowledge-base'
 import { Route as ApiPublicWidgetScriptRouteImport } from './routes/api/public/widget/script'
 import { Route as ApiPublicWidgetAgentIdChatRouteImport } from './routes/api/public/widget/$agentId.chat'
 import { Route as ApiPublicWidgetAgentIdConfigRouteImport } from './routes/api/public/widget/$agentId.config'
@@ -62,6 +65,21 @@ const AgentIdTabRoute = AgentIdTabRouteImport.update({
   path: '/$tab',
   getParentRoute: () => AgentIdRoute,
 } as any)
+const AgentIdChatbotBuilderRoute = AgentIdChatbotBuilderRouteImport.update({
+  id: '/chatbot-builder',
+  path: '/chatbot-builder',
+  getParentRoute: () => AgentIdRoute,
+} as any)
+const AgentIdConnectRoute = AgentIdConnectRouteImport.update({
+  id: '/connect',
+  path: '/connect',
+  getParentRoute: () => AgentIdRoute,
+} as any)
+const AgentIdKnowledgeBaseRoute = AgentIdKnowledgeBaseRouteImport.update({
+  id: '/knowledge-base',
+  path: '/knowledge-base',
+  getParentRoute: () => AgentIdRoute,
+} as any)
 const ApiPublicWidgetScriptRoute = ApiPublicWidgetScriptRouteImport.update({
   id: '/api/public/widget/script',
   path: '/api/public/widget/script',
@@ -94,6 +112,9 @@ export interface FileRoutesByFullPath {
   '/agent/$id': typeof AgentIdRouteWithChildren
   '/widget-preview/$id': typeof WidgetPreviewIdRoute
   '/agent/$id/$tab': typeof AgentIdTabRoute
+  '/agent/$id/chatbot-builder': typeof AgentIdChatbotBuilderRoute
+  '/agent/$id/connect': typeof AgentIdConnectRoute
+  '/agent/$id/knowledge-base': typeof AgentIdKnowledgeBaseRoute
   '/agent/$id/': typeof AgentIdIndexRoute
   '/api/public/widget/script': typeof ApiPublicWidgetScriptRoute
   '/api/public/widget/$agentId/chat': typeof ApiPublicWidgetAgentIdChatRoute
@@ -107,6 +128,9 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/widget-preview/$id': typeof WidgetPreviewIdRoute
   '/agent/$id/$tab': typeof AgentIdTabRoute
+  '/agent/$id/chatbot-builder': typeof AgentIdChatbotBuilderRoute
+  '/agent/$id/connect': typeof AgentIdConnectRoute
+  '/agent/$id/knowledge-base': typeof AgentIdKnowledgeBaseRoute
   '/agent/$id': typeof AgentIdIndexRoute
   '/api/public/widget/script': typeof ApiPublicWidgetScriptRoute
   '/api/public/widget/$agentId/chat': typeof ApiPublicWidgetAgentIdChatRoute
@@ -122,6 +146,9 @@ export interface FileRoutesById {
   '/agent/$id': typeof AgentIdRouteWithChildren
   '/widget-preview/$id': typeof WidgetPreviewIdRoute
   '/agent/$id/$tab': typeof AgentIdTabRoute
+  '/agent/$id/chatbot-builder': typeof AgentIdChatbotBuilderRoute
+  '/agent/$id/connect': typeof AgentIdConnectRoute
+  '/agent/$id/knowledge-base': typeof AgentIdKnowledgeBaseRoute
   '/agent/$id/': typeof AgentIdIndexRoute
   '/api/public/widget/script': typeof ApiPublicWidgetScriptRoute
   '/api/public/widget/$agentId/chat': typeof ApiPublicWidgetAgentIdChatRoute
@@ -138,6 +165,9 @@ export interface FileRouteTypes {
     | '/agent/$id'
     | '/widget-preview/$id'
     | '/agent/$id/$tab'
+    | '/agent/$id/chatbot-builder'
+    | '/agent/$id/connect'
+    | '/agent/$id/knowledge-base'
     | '/agent/$id/'
     | '/api/public/widget/script'
     | '/api/public/widget/$agentId/chat'
@@ -151,6 +181,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/widget-preview/$id'
     | '/agent/$id/$tab'
+    | '/agent/$id/chatbot-builder'
+    | '/agent/$id/connect'
+    | '/agent/$id/knowledge-base'
     | '/agent/$id'
     | '/api/public/widget/script'
     | '/api/public/widget/$agentId/chat'
@@ -165,6 +198,9 @@ export interface FileRouteTypes {
     | '/agent/$id'
     | '/widget-preview/$id'
     | '/agent/$id/$tab'
+    | '/agent/$id/chatbot-builder'
+    | '/agent/$id/connect'
+    | '/agent/$id/knowledge-base'
     | '/agent/$id/'
     | '/api/public/widget/script'
     | '/api/public/widget/$agentId/chat'
@@ -243,6 +279,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AgentIdTabRouteImport
       parentRoute: typeof AgentIdRoute
     }
+    '/agent/$id/chatbot-builder': {
+      id: '/agent/$id/chatbot-builder'
+      path: '/chatbot-builder'
+      fullPath: '/agent/$id/chatbot-builder'
+      preLoaderRoute: typeof AgentIdChatbotBuilderRouteImport
+      parentRoute: typeof AgentIdRoute
+    }
+    '/agent/$id/connect': {
+      id: '/agent/$id/connect'
+      path: '/connect'
+      fullPath: '/agent/$id/connect'
+      preLoaderRoute: typeof AgentIdConnectRouteImport
+      parentRoute: typeof AgentIdRoute
+    }
+    '/agent/$id/knowledge-base': {
+      id: '/agent/$id/knowledge-base'
+      path: '/knowledge-base'
+      fullPath: '/agent/$id/knowledge-base'
+      preLoaderRoute: typeof AgentIdKnowledgeBaseRouteImport
+      parentRoute: typeof AgentIdRoute
+    }
     '/api/public/widget/script': {
       id: '/api/public/widget/script'
       path: '/api/public/widget/script'
@@ -276,11 +333,17 @@ declare module '@tanstack/react-router' {
 
 interface AgentIdRouteChildren {
   AgentIdTabRoute: typeof AgentIdTabRoute
+  AgentIdChatbotBuilderRoute: typeof AgentIdChatbotBuilderRoute
+  AgentIdConnectRoute: typeof AgentIdConnectRoute
+  AgentIdKnowledgeBaseRoute: typeof AgentIdKnowledgeBaseRoute
   AgentIdIndexRoute: typeof AgentIdIndexRoute
 }
 
 const AgentIdRouteChildren: AgentIdRouteChildren = {
   AgentIdTabRoute: AgentIdTabRoute,
+  AgentIdChatbotBuilderRoute: AgentIdChatbotBuilderRoute,
+  AgentIdConnectRoute: AgentIdConnectRoute,
+  AgentIdKnowledgeBaseRoute: AgentIdKnowledgeBaseRoute,
   AgentIdIndexRoute: AgentIdIndexRoute,
 }
 
