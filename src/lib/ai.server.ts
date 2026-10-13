@@ -80,7 +80,7 @@ export async function embed(inputs: string[]): Promise<number[][]> {
 // ---------- Chat streaming (returns a stream of plain text deltas) ----------
 export type ChatMsg = { role: "user" | "assistant"; content: string };
 
-async function* sse(res: Response): AsyncGenerator<{ event?: string; data: string }> {
+async function* sse(res: Response): AsyncGenerator<{ event: string | undefined; data: string }> {
   const reader = res.body!.getReader();
   const dec = new TextDecoder();
   let buf = "";
@@ -102,8 +102,8 @@ async function* sse(res: Response): AsyncGenerator<{ event?: string; data: strin
   }
 }
 
-export async function streamChat(opts: { model: string; system: string; messages: ChatMsg[]; signal?: AbortSignal; json?: { name: string; schema: object } }): Promise<AsyncGenerator<string>> {
-  const { model, system, messages, signal } = opts;
+export async function streamChat(opts: { model: string; system: string; messages: ChatMsg[]; signal?: AbortSignal | undefined; json?: { name: string; schema: object } }): Promise<AsyncGenerator<string>> {
+  const { model, system, messages } = opts; const signal = opts.signal ?? null;
   const headers = { Authorization: `Bearer ${key()}`, "Content-Type": "application/json", "X-Lovable-AIG-SDK": "fetch" };
 
   if (model.startsWith("anthropic/")) {
@@ -122,7 +122,7 @@ export async function streamChat(opts: { model: string; system: string; messages
   if (model.startsWith("openai/")) {
     const reasoning = model.startsWith("openai/gpt-6") ? { reasoning: { effort: "low" } } : {};
     const body: Record<string, unknown> = { model, instructions: system, input: messages.map((m) => ({ role: m.role, content: m.content })), stream: true, store: false, ...reasoning };
-    if (opts.json) body.text = { format: { type: "json_schema", name: opts.json.name, schema: opts.json.schema, strict: true } };
+    if (opts.json) body["text"] = { format: { type: "json_schema", name: opts.json.name, schema: opts.json.schema, strict: true } };
     const res = await fetch(`${GATEWAY}/responses`, { method: "POST", headers, signal, body: JSON.stringify(body) });
     if (!res.ok) throw await failure(res);
     return (async function* () {

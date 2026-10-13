@@ -23,7 +23,7 @@ export const addKnowledge = createServerFn({ method: "POST" })
       source_url = data.url;
     }
     const { data: item, error } = await supabaseAdmin.from("knowledge_items")
-      .insert({ agent_id: data.agentId, source_type: data.type, title: data.type === "url" ? data.url : title, source_url, status: "processing" })
+      .insert({ agent_id: data.agentId, source_type: data.type, title: data.type === "url" ? (data.url ?? null) : title, source_url, status: "processing" })
       .select().single();
     if (error) throw new Error(error.message);
 
