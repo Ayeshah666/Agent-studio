@@ -128,7 +128,7 @@ function Builder() {
             <F label="Status text"><Input value={c.status_text} onChange={(e) => set({ status_text: e.target.value })} /></F>
             <F label="Widget position"><Seg value={c.position} onChange={(v) => set({ position: v })} options={[{ value: "bottom-right", label: "Bottom right" }, { value: "bottom-left", label: "Bottom left" }]} /></F>
             <F label="Quick-reply buttons (up to 3)">
-              <div className="space-y-2">{qr.map((q, i) => <Input key={i} value={q} placeholder={`Quick reply ${i + 1}`} onChange={(e) => { const n = [...qr]; n[i] = e.target.value; set({ quick_replies: n.filter((x, j) => x || j < n.length - 1).map((x) => x).filter((x) => x !== "" || false) }); }} />)}</div>
+              <div className="space-y-2">{qr.map((q, i) => <Input key={i} value={q} placeholder={`Quick reply ${i + 1}`} onChange={(e) => { const n = [...qr]; n[i] = e.target.value; set({ quick_replies: n }); }} />)}</div>
             </F>
             <div className="rounded-xl border p-4">
               <div className="flex items-center justify-between"><Label>Lead Capture Form</Label><Switch checked={c.lead_form.enabled} onCheckedChange={(v) => set({ lead_form: { ...c.lead_form, enabled: v } })} /></div>
