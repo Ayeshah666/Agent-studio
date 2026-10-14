@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           agent_type: string
           allowed_domain: string | null
+          automations: Json
           business_name: string | null
           call_count: number
           chat_count: number
@@ -42,6 +43,7 @@ export type Database = {
         Insert: {
           agent_type?: string
           allowed_domain?: string | null
+          automations?: Json
           business_name?: string | null
           call_count?: number
           chat_count?: number
@@ -66,6 +68,7 @@ export type Database = {
         Update: {
           agent_type?: string
           allowed_domain?: string | null
+          automations?: Json
           business_name?: string | null
           call_count?: number
           chat_count?: number
@@ -96,8 +99,10 @@ export type Database = {
           created_at: string
           direction: string | null
           duration_seconds: number | null
+          extracted: Json
           from_number: string | null
           id: string
+          outcome: string | null
           recording_url: string | null
           summary: string | null
           to_number: string | null
@@ -109,8 +114,10 @@ export type Database = {
           created_at?: string
           direction?: string | null
           duration_seconds?: number | null
+          extracted?: Json
           from_number?: string | null
           id?: string
+          outcome?: string | null
           recording_url?: string | null
           summary?: string | null
           to_number?: string | null
@@ -122,8 +129,10 @@ export type Database = {
           created_at?: string
           direction?: string | null
           duration_seconds?: number | null
+          extracted?: Json
           from_number?: string | null
           id?: string
+          outcome?: string | null
           recording_url?: string | null
           summary?: string | null
           to_number?: string | null
@@ -193,9 +202,12 @@ export type Database = {
           channel: string
           contact_id: string | null
           created_at: string
+          extracted: Json
           id: string
           messages: Json
+          outcome: string | null
           summary: string | null
+          unread_count: number
           updated_at: string
         }
         Insert: {
@@ -203,9 +215,12 @@ export type Database = {
           channel?: string
           contact_id?: string | null
           created_at?: string
+          extracted?: Json
           id?: string
           messages?: Json
+          outcome?: string | null
           summary?: string | null
+          unread_count?: number
           updated_at?: string
         }
         Update: {
@@ -213,9 +228,12 @@ export type Database = {
           channel?: string
           contact_id?: string | null
           created_at?: string
+          extracted?: Json
           id?: string
           messages?: Json
+          outcome?: string | null
           summary?: string | null
+          unread_count?: number
           updated_at?: string
         }
         Relationships: [
@@ -327,7 +345,13 @@ export type Database = {
           contact_id: string | null
           created_at: string
           data: Json
+          details: string | null
+          email: string | null
           id: string
+          lead_type: string
+          name: string | null
+          phone: string | null
+          source: string
           status: string | null
         }
         Insert: {
@@ -335,7 +359,13 @@ export type Database = {
           contact_id?: string | null
           created_at?: string
           data?: Json
+          details?: string | null
+          email?: string | null
           id?: string
+          lead_type?: string
+          name?: string | null
+          phone?: string | null
+          source?: string
           status?: string | null
         }
         Update: {
@@ -343,7 +373,13 @@ export type Database = {
           contact_id?: string | null
           created_at?: string
           data?: Json
+          details?: string | null
+          email?: string | null
           id?: string
+          lead_type?: string
+          name?: string | null
+          phone?: string | null
+          source?: string
           status?: string | null
         }
         Relationships: [

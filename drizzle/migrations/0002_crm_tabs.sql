@@ -1,0 +1,5 @@
+ALTER TABLE public.leads ADD COLUMN IF NOT EXISTS name text, ADD COLUMN IF NOT EXISTS email text, ADD COLUMN IF NOT EXISTS phone text, ADD COLUMN IF NOT EXISTS lead_type text NOT NULL DEFAULT 'inquiry', ADD COLUMN IF NOT EXISTS details text, ADD COLUMN IF NOT EXISTS source text NOT NULL DEFAULT 'manual';
+ALTER TABLE public.conversations ADD COLUMN IF NOT EXISTS unread_count integer NOT NULL DEFAULT 0, ADD COLUMN IF NOT EXISTS outcome text, ADD COLUMN IF NOT EXISTS extracted jsonb NOT NULL DEFAULT '{}'::jsonb;
+ALTER TABLE public.calls ADD COLUMN IF NOT EXISTS outcome text, ADD COLUMN IF NOT EXISTS extracted jsonb NOT NULL DEFAULT '{}'::jsonb;
+ALTER TABLE public.agents ADD COLUMN IF NOT EXISTS automations jsonb NOT NULL DEFAULT '{}'::jsonb;
+UPDATE public.leads SET name = data->>'name', email = data->>'email', phone = data->>'phone', source = COALESCE(data->>'source','manual') WHERE name IS NULL AND email IS NULL;
