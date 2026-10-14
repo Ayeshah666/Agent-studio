@@ -15,6 +15,13 @@
       "when": 1791752660724,
       "tag": "0001_knowledge_chatbot",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791978273585,
+      "tag": "0002_crm_tabs",
+      "breakpoints": true
     }
   ]
 }
