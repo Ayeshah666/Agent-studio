@@ -11,3 +11,5 @@
 
 - Personal single-user app with no login: tables allow full public access by design; add auth + per-user policies before sharing it. Why: user requested a solo tool without accounts.
 - AI calls go through createServerFn in src/lib/ai.functions.ts so keys stay server-side.
+- Embeddable chat widget is vanilla JS served from /api/public/widget/script with config/chat/lead endpoints under /api/public/widget/$agentId; they use the admin client server-side and only expose display settings. Why: must run on any third-party site.
+- Knowledge retrieval uses knowledge_chunks (768-dim embeddings, service-role only) via the match_knowledge_chunks function. Why: keeps raw chunks private while the widget stays public.
