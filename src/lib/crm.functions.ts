@@ -9,9 +9,17 @@ export const summarizeRecord = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { completeText } = await import("./ai.server");
     const table = data.kind === "call" ? "calls" : "conversations";
-    const { data: row, error } = await supabaseAdmin.from(table).select("messages:" + (data.kind === "call" ? "transcript" : "messages")).eq("id", data.id).maybeSingle();
-    if (error || !row) throw new Error("Record not found");
-    const list = ((row as unknown as { messages: unknown }).messages ?? []) as { role: string; content: string }[];
+    let raw0: unknown = null;
+    if (data.kind === "call") {
+      const { data: r } = await supabaseAdmin.from("calls").select("transcript").eq("id", data.id).maybeSingle();
+      if (!r) throw new Error("Record not found");
+      raw0 = r.transcript;
+    } else {
+      const { data: r } = await supabaseAdmin.from("conversations").select("messages").eq("id", data.id).maybeSingle();
+      if (!r) throw new Error("Record not found");
+      raw0 = r.messages;
+    }
+    const list = (raw0 ?? []) as { role: string; content: string }[];
     if (!Array.isArray(list) || list.length === 0) throw new Error("There is no transcript to summarize yet");
     const text = list.map((m) => `${m.role === "user" ? "Customer" : "Agent"}: ${m.content}`).join("\n").slice(0, 20000);
     const nullableStr = { type: ["string", "null"] };
@@ -30,6 +38,7 @@ export const summarizeRecord = createServerFn({ method: "POST" })
     });
     const j = JSON.parse(raw) as Extract;
     const { summary, outcome, ...extracted } = j;
-    await supabaseAdmin.from(table).update({ summary, outcome, extracted }).eq("id", data.id);
+    if (table === "calls") await supabaseAdmin.from("calls").update({ summary, outcome, extracted }).eq("id", data.id);
+    else await supabaseAdmin.from("conversations").update({ summary, outcome, extracted }).eq("id", data.id);
     return j;
   });
