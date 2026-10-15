@@ -22,8 +22,10 @@ import { Route as AgentIdChatbotBuilderRouteImport } from './routes/agent.$id.ch
 import { Route as AgentIdConnectRouteImport } from './routes/agent.$id.connect'
 import { Route as AgentIdContactsRouteImport } from './routes/agent.$id.contacts'
 import { Route as AgentIdConversationsRouteImport } from './routes/agent.$id.conversations'
+import { Route as AgentIdIntegrationsRouteImport } from './routes/agent.$id.integrations'
 import { Route as AgentIdKnowledgeBaseRouteImport } from './routes/agent.$id.knowledge-base'
 import { Route as AgentIdLeadsRouteImport } from './routes/agent.$id.leads'
+import { Route as AgentIdSmsTransferRouteImport } from './routes/agent.$id.sms-transfer'
 import { Route as ApiPublicWidgetScriptRouteImport } from './routes/api/public/widget/script'
 import { Route as ApiPublicWidgetAgentIdChatRouteImport } from './routes/api/public/widget/$agentId.chat'
 import { Route as ApiPublicWidgetAgentIdConfigRouteImport } from './routes/api/public/widget/$agentId.config'
@@ -94,6 +96,11 @@ const AgentIdConversationsRoute = AgentIdConversationsRouteImport.update({
   path: '/conversations',
   getParentRoute: () => AgentIdRoute,
 } as any)
+const AgentIdIntegrationsRoute = AgentIdIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => AgentIdRoute,
+} as any)
 const AgentIdKnowledgeBaseRoute = AgentIdKnowledgeBaseRouteImport.update({
   id: '/knowledge-base',
   path: '/knowledge-base',
@@ -102,6 +109,11 @@ const AgentIdKnowledgeBaseRoute = AgentIdKnowledgeBaseRouteImport.update({
 const AgentIdLeadsRoute = AgentIdLeadsRouteImport.update({
   id: '/leads',
   path: '/leads',
+  getParentRoute: () => AgentIdRoute,
+} as any)
+const AgentIdSmsTransferRoute = AgentIdSmsTransferRouteImport.update({
+  id: '/sms-transfer',
+  path: '/sms-transfer',
   getParentRoute: () => AgentIdRoute,
 } as any)
 const ApiPublicWidgetScriptRoute = ApiPublicWidgetScriptRouteImport.update({
@@ -141,8 +153,10 @@ export interface FileRoutesByFullPath {
   '/agent/$id/connect': typeof AgentIdConnectRoute
   '/agent/$id/contacts': typeof AgentIdContactsRoute
   '/agent/$id/conversations': typeof AgentIdConversationsRoute
+  '/agent/$id/integrations': typeof AgentIdIntegrationsRoute
   '/agent/$id/knowledge-base': typeof AgentIdKnowledgeBaseRoute
   '/agent/$id/leads': typeof AgentIdLeadsRoute
+  '/agent/$id/sms-transfer': typeof AgentIdSmsTransferRoute
   '/agent/$id/': typeof AgentIdIndexRoute
   '/api/public/widget/script': typeof ApiPublicWidgetScriptRoute
   '/api/public/widget/$agentId/chat': typeof ApiPublicWidgetAgentIdChatRoute
@@ -161,8 +175,10 @@ export interface FileRoutesByTo {
   '/agent/$id/connect': typeof AgentIdConnectRoute
   '/agent/$id/contacts': typeof AgentIdContactsRoute
   '/agent/$id/conversations': typeof AgentIdConversationsRoute
+  '/agent/$id/integrations': typeof AgentIdIntegrationsRoute
   '/agent/$id/knowledge-base': typeof AgentIdKnowledgeBaseRoute
   '/agent/$id/leads': typeof AgentIdLeadsRoute
+  '/agent/$id/sms-transfer': typeof AgentIdSmsTransferRoute
   '/agent/$id': typeof AgentIdIndexRoute
   '/api/public/widget/script': typeof ApiPublicWidgetScriptRoute
   '/api/public/widget/$agentId/chat': typeof ApiPublicWidgetAgentIdChatRoute
@@ -183,8 +199,10 @@ export interface FileRoutesById {
   '/agent/$id/connect': typeof AgentIdConnectRoute
   '/agent/$id/contacts': typeof AgentIdContactsRoute
   '/agent/$id/conversations': typeof AgentIdConversationsRoute
+  '/agent/$id/integrations': typeof AgentIdIntegrationsRoute
   '/agent/$id/knowledge-base': typeof AgentIdKnowledgeBaseRoute
   '/agent/$id/leads': typeof AgentIdLeadsRoute
+  '/agent/$id/sms-transfer': typeof AgentIdSmsTransferRoute
   '/agent/$id/': typeof AgentIdIndexRoute
   '/api/public/widget/script': typeof ApiPublicWidgetScriptRoute
   '/api/public/widget/$agentId/chat': typeof ApiPublicWidgetAgentIdChatRoute
@@ -206,8 +224,10 @@ export interface FileRouteTypes {
     | '/agent/$id/connect'
     | '/agent/$id/contacts'
     | '/agent/$id/conversations'
+    | '/agent/$id/integrations'
     | '/agent/$id/knowledge-base'
     | '/agent/$id/leads'
+    | '/agent/$id/sms-transfer'
     | '/agent/$id/'
     | '/api/public/widget/script'
     | '/api/public/widget/$agentId/chat'
@@ -226,8 +246,10 @@ export interface FileRouteTypes {
     | '/agent/$id/connect'
     | '/agent/$id/contacts'
     | '/agent/$id/conversations'
+    | '/agent/$id/integrations'
     | '/agent/$id/knowledge-base'
     | '/agent/$id/leads'
+    | '/agent/$id/sms-transfer'
     | '/agent/$id'
     | '/api/public/widget/script'
     | '/api/public/widget/$agentId/chat'
@@ -247,8 +269,10 @@ export interface FileRouteTypes {
     | '/agent/$id/connect'
     | '/agent/$id/contacts'
     | '/agent/$id/conversations'
+    | '/agent/$id/integrations'
     | '/agent/$id/knowledge-base'
     | '/agent/$id/leads'
+    | '/agent/$id/sms-transfer'
     | '/agent/$id/'
     | '/api/public/widget/script'
     | '/api/public/widget/$agentId/chat'
@@ -362,6 +386,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AgentIdConversationsRouteImport
       parentRoute: typeof AgentIdRoute
     }
+    '/agent/$id/integrations': {
+      id: '/agent/$id/integrations'
+      path: '/integrations'
+      fullPath: '/agent/$id/integrations'
+      preLoaderRoute: typeof AgentIdIntegrationsRouteImport
+      parentRoute: typeof AgentIdRoute
+    }
     '/agent/$id/knowledge-base': {
       id: '/agent/$id/knowledge-base'
       path: '/knowledge-base'
@@ -374,6 +405,13 @@ declare module '@tanstack/react-router' {
       path: '/leads'
       fullPath: '/agent/$id/leads'
       preLoaderRoute: typeof AgentIdLeadsRouteImport
+      parentRoute: typeof AgentIdRoute
+    }
+    '/agent/$id/sms-transfer': {
+      id: '/agent/$id/sms-transfer'
+      path: '/sms-transfer'
+      fullPath: '/agent/$id/sms-transfer'
+      preLoaderRoute: typeof AgentIdSmsTransferRouteImport
       parentRoute: typeof AgentIdRoute
     }
     '/api/public/widget/script': {
@@ -414,8 +452,10 @@ interface AgentIdRouteChildren {
   AgentIdConnectRoute: typeof AgentIdConnectRoute
   AgentIdContactsRoute: typeof AgentIdContactsRoute
   AgentIdConversationsRoute: typeof AgentIdConversationsRoute
+  AgentIdIntegrationsRoute: typeof AgentIdIntegrationsRoute
   AgentIdKnowledgeBaseRoute: typeof AgentIdKnowledgeBaseRoute
   AgentIdLeadsRoute: typeof AgentIdLeadsRoute
+  AgentIdSmsTransferRoute: typeof AgentIdSmsTransferRoute
   AgentIdIndexRoute: typeof AgentIdIndexRoute
 }
 
@@ -426,8 +466,10 @@ const AgentIdRouteChildren: AgentIdRouteChildren = {
   AgentIdConnectRoute: AgentIdConnectRoute,
   AgentIdContactsRoute: AgentIdContactsRoute,
   AgentIdConversationsRoute: AgentIdConversationsRoute,
+  AgentIdIntegrationsRoute: AgentIdIntegrationsRoute,
   AgentIdKnowledgeBaseRoute: AgentIdKnowledgeBaseRoute,
   AgentIdLeadsRoute: AgentIdLeadsRoute,
+  AgentIdSmsTransferRoute: AgentIdSmsTransferRoute,
   AgentIdIndexRoute: AgentIdIndexRoute,
 }
 
