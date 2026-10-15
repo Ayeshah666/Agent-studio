@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { DashboardStats } from "@/components/DashboardStats";
 import { supabase } from "@/integrations/supabase/client";
 import { INDUSTRIES, INDUSTRY_GOALS, AGENT_TYPE_LABEL, DEFAULT_SETTINGS, type AgentType } from "@/lib/agent-options";
 
@@ -68,7 +69,8 @@ function Home() {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-6 py-16">
+    <>
+    <div className="mx-auto flex min-h-[75vh] max-w-3xl flex-col items-center justify-center px-6 py-16">
       {!type && (
         <>
           <h1 className="text-center text-4xl font-semibold tracking-tight">What would you like to build today?</h1>
@@ -138,6 +140,8 @@ function Home() {
         </div>
       )}
     </div>
+    {!type && <DashboardStats />}
+    </>
   );
 }
 

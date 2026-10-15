@@ -59,6 +59,10 @@ export const Route = createFileRoute("/api/public/widget/$agentId/chat")({
           if (!ex) conversationId = null;
         }
         if (!conversationId) {
+          if (!contactId) {
+            const { data: ct } = await supabaseAdmin.from("contacts").insert({ agent_id: agent.id, name: "Website visitor", data: { source: "chat" } }).select("id").single();
+            if (ct) contactId = ct.id;
+          }
           const { data: conv, error } = await supabaseAdmin.from("conversations")
             .insert({ agent_id: agent.id, contact_id: contactId ?? null, channel: "chat", messages: [] }).select("id").single();
           if (error) return json({ error: "Could not start the conversation" }, 500);
@@ -87,8 +91,12 @@ export const Route = createFileRoute("/api/public/widget/$agentId/chat")({
             }
             const now = new Date().toISOString();
             const transcript = [...messages, { role: "assistant", content: reply }].map((m) => ({ ...m, at: now }));
+            const { data: cur } = await supabaseAdmin.from("conversations").select("unread_count, messages").eq("id", convId).maybeSingle();
+            // keep any manual replies the owner sent from the inbox
+            const prev = (Array.isArray(cur?.messages) ? cur.messages : []) as { role: string; content: string; at?: string }[];
+            const manual = prev.filter((m) => m.role === "agent");
             const { error } = await supabaseAdmin.from("conversations")
-              .update({ messages: transcript, updated_at: now, ...(contactId ? { contact_id: contactId } : {}) }).eq("id", convId);
+              .update({ messages: [...transcript, ...manual.filter((m) => !transcript.some((t) => t.content === m.content))], unread_count: (cur?.unread_count ?? 0) + 1, updated_at: now, ...(contactId ? { contact_id: contactId } : {}) }).eq("id", convId);
             if (error) console.error("save conversation failed", error);
             ctrl.close();
           },

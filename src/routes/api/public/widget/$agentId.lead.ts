@@ -25,7 +25,7 @@ export const Route = createFileRoute("/api/public/widget/$agentId/lead")({
           .select("id").single();
         if (error) return json({ error: "Could not save your details" }, 500);
         const { data: lead, error: le } = await supabaseAdmin.from("leads")
-          .insert({ agent_id: agent.id, contact_id: contact.id, data: { ...d, source: "chatbot" } })
+          .insert({ agent_id: agent.id, contact_id: contact.id, name: d.name || null, email: d.email || null, phone: d.phone || null, lead_type: "inquiry", details: "Submitted the chat lead form", source: "chatbot", data: { ...d, source: "chatbot" } })
           .select("id").single();
         if (le) return json({ error: "Could not save your details" }, 500);
         return json({ contactId: contact.id, leadId: lead.id });
