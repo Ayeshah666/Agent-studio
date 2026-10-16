@@ -25,7 +25,7 @@ export const Route = createFileRoute("/api/public/widget/$agentId/chat")({
         if (!originAllowed(request, agent.allowed_domain)) return json({ error: "Not allowed" }, 403);
         const parsed = schema.safeParse(await request.json().catch(() => null));
         if (!parsed.success) return json({ error: "Invalid message" }, 400);
-        const { messages, contactId } = parsed.data;
+        const { messages } = parsed.data; let contactId = parsed.data.contactId;
         const last = messages[messages.length - 1]!;
         if (last.role !== "user") return json({ error: "Invalid message" }, 400);
 
