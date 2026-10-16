@@ -70,7 +70,7 @@ function Home() {
 
   return (
     <>
-    <div className="mx-auto flex min-h-[75vh] max-w-3xl flex-col items-center justify-center px-6 py-16">
+    <div className="mx-auto flex min-h-[60vh] max-w-3xl flex-col items-center justify-center px-6 py-16">
       {!type && (
         <>
           <h1 className="text-center text-4xl font-semibold tracking-tight">What would you like to build today?</h1>
